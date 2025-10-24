@@ -7,7 +7,7 @@ import random
 
 # Page config
 st.set_page_config(
-    page_title="WasteWise AI - Smart Recycling Assistant",
+    page_title="EcoSort - Smart Recycling Assistant",
     page_icon="🌿",
     layout="wide",
     initial_sidebar_state="collapsed"
