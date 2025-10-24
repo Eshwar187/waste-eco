@@ -538,7 +538,7 @@ st.markdown("""
 st.markdown("""
 <div class="hero-minimal">
     <h1 class="hero-title">Classify Your Waste<br>Instantly with AI</h1>
-    <p class="hero-subtitle">Upload a photo and get instant recycling instructions powered by advanced AI that handles wrappers and mixed materials</p>
+    <p class="hero-subtitle">Upload a photo and get instant recycling instructions powered by advanced AI</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -705,24 +705,11 @@ with col_right:
                 <strong>3. ♻️ Recycle</strong> - Follow disposal instructions<br><br>
                 <br>
                 <strong>What You'll Get:</strong><br>
-                ✓ Smart AI that handles wrappers and mixed materials<br>
+                ✓ Smart AI <br>
                 ✓ Detailed recycling instructions<br>
                 ✓ Environmental impact metrics<br>
                 ✓ Eco points & achievement badges<br>
                 ✓ Track your contribution to saving the planet
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        # Add quick stats
-        st.markdown("""
-        <div class="card" style="margin-top: 2rem;">
-            <p class="feature-title">📊 Quick Stats</p>
-            <p class="feature-desc">
-                🌍 <strong>Global Impact:</strong> Join thousands reducing waste<br>
-                🔋 <strong>Energy Saved:</strong> Equivalent to powering 1M+ homes<br>
-                🌳 <strong>Trees Saved:</strong> Over 100K trees preserved<br>
-                💧 <strong>Water Conserved:</strong> Millions of gallons saved
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -784,7 +771,7 @@ with col1:
         <p class="feature-title">♻️ Recyclable Materials</p>
         <p class="feature-desc">
             <strong>Paper & Cardboard:</strong> Newspapers, magazines, boxes<br>
-            <strong>Plastics:</strong> Bottles, containers, wrappers (check #1-7)<br>
+            <strong>Plastics:</strong> Bottles, containers, wrappers <br>
             <strong>Glass:</strong> Bottles, jars (all colors)<br>
             <strong>Metals:</strong> Aluminum cans, steel cans, foil<br>
             <strong>Mixed Materials:</strong> Smart detection for wrappers
