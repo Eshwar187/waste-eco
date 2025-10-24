@@ -6,613 +6,415 @@ import random
 
 # Page config
 st.set_page_config(
-    page_title="EcoSort - AI Waste Classifier",
-    page_icon="♻️",
+    page_title="WasteWise AI - Smart Recycling Assistant",
+    page_icon="🌿",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="collapsed"
 )
 
-# Premium CSS with Enhanced UI
+# Fresh Modern CSS Design
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Sans:wght@400;500;700&display=swap');
     
     * {
-        font-family: 'Poppins', 'Space Grotesk', sans-serif;
+        font-family: 'Inter', sans-serif;
     }
     
     .stApp {
-        background: linear-gradient(135deg, #0a0b1e 0%, #1a1b3e 50%, #0f1429 100%);
-        background-attachment: fixed;
+        background: #f8faf9;
     }
     
     #MainMenu, footer, header {visibility: hidden;}
     
     .block-container {
-        padding: 2rem 3rem;
-        max-width: 1600px;
+        padding: 1.5rem 2.5rem;
+        max-width: 1400px;
     }
     
-    /* Animated Background */
-    @keyframes gradientShift {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
+    /* Clean Navigation Bar */
+    .nav-bar {
+        background: white;
+        padding: 1.5rem 2.5rem;
+        margin: -1.5rem -2.5rem 2rem -2.5rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        border-bottom: 1px solid #e8ebe9;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
     
-    /* Hero Section with Animation */
-    .hero {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-        background-size: 200% 200%;
-        animation: gradientShift 15s ease infinite;
-        padding: 3.5rem 3rem;
-        border-radius: 28px;
-        text-align: center;
+    .logo {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: #16a34a;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .nav-subtitle {
+        color: #64748b;
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin-left: 0.5rem;
+    }
+    
+    /* Hero Section - Minimalist */
+    .hero-minimal {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        padding: 4rem 3rem;
+        border-radius: 20px;
         margin-bottom: 3rem;
-        box-shadow: 0 30px 60px rgba(102, 126, 234, 0.4), 
-                    0 0 120px rgba(118, 75, 162, 0.2),
-                    inset 0 0 0 1px rgba(255,255,255,0.1);
         position: relative;
         overflow: hidden;
-        border: 2px solid rgba(255, 255, 255, 0.1);
     }
     
-    .hero::before {
+    .hero-minimal::before {
         content: '';
         position: absolute;
         top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
+        right: -20%;
+        width: 500px;
+        height: 500px;
         background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-        animation: rotate 20s linear infinite;
-    }
-    
-    @keyframes rotate {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+        border-radius: 50%;
     }
     
     .hero-title {
-        font-size: 4.5rem;
-        font-weight: 800;
+        font-size: 3.5rem;
+        font-weight: 900;
         color: white;
-        margin: 0;
-        text-shadow: 3px 6px 16px rgba(0,0,0,0.3),
-                     0 0 40px rgba(255,255,255,0.2);
+        margin: 0 0 1rem 0;
         position: relative;
-        z-index: 1;
-        letter-spacing: -2px;
+        line-height: 1.1;
     }
     
     .hero-subtitle {
-        font-size: 1.4rem;
-        color: rgba(255,255,255,0.95);
-        margin: 1.2rem 0 0 0;
+        font-size: 1.2rem;
+        color: rgba(255,255,255,0.9);
+        margin: 0;
         font-weight: 500;
         position: relative;
-        z-index: 1;
-        letter-spacing: 0.5px;
+        max-width: 600px;
     }
     
-    /* Card Styles with Hover Effect */
+    /* Clean Card Design */
     .card {
-        background: rgba(255, 255, 255, 0.04);
-        backdrop-filter: blur(25px);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 22px;
-        padding: 2.2rem;
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 16px;
+        padding: 2rem;
         margin: 1rem 0;
-        box-shadow: 0 12px 45px rgba(0, 0, 0, 0.35);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
     }
     
     .card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
-                    0 0 0 1px rgba(255, 255, 255, 0.15);
-        border-color: rgba(0, 242, 96, 0.3);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        border-color: #10b981;
+        transform: translateY(-2px);
     }
     
-    /* Result Display with Animation */
-    @keyframes resultPulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.02); }
-    }
-    
+    /* Result Box - Clean Design */
     .result-box {
-        background: linear-gradient(135deg, #00f260 0%, #0575e6 50%, #00d2ff 100%);
-        background-size: 200% 200%;
-        animation: gradientShift 8s ease infinite, resultPulse 2s ease-in-out infinite;
-        border-radius: 24px;
-        padding: 3rem;
+        background: white;
+        border: 2px solid #10b981;
+        border-radius: 16px;
+        padding: 2.5rem;
         text-align: center;
         margin: 1.5rem 0;
-        box-shadow: 0 20px 50px rgba(0, 242, 96, 0.4),
-                    0 0 80px rgba(5, 117, 230, 0.2),
-                    inset 0 0 0 1px rgba(255,255,255,0.2);
-        border: 2px solid rgba(255, 255, 255, 0.15);
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .result-box::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-        animation: shine 3s infinite;
-    }
-    
-    @keyframes shine {
-        0% { left: -100%; }
-        50%, 100% { left: 100%; }
+        box-shadow: 0 4px 20px rgba(16, 185, 129, 0.15);
     }
     
     .result-category {
-        font-size: 4rem;
-        font-weight: 800;
-        color: white;
-        text-transform: uppercase;
-        letter-spacing: 6px;
+        font-size: 3rem;
+        font-weight: 900;
+        color: #10b981;
+        text-transform: capitalize;
+        letter-spacing: -1px;
         margin: 0;
-        text-shadow: 3px 6px 15px rgba(0,0,0,0.4),
-                     0 0 40px rgba(255,255,255,0.3);
-        position: relative;
-        z-index: 1;
-        animation: slideUp 0.6s ease;
-    }
-    
-    @keyframes slideUp {
-        from { 
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to { 
-            opacity: 1;
-            transform: translateY(0);
-        }
     }
     
     .confidence {
-        color: rgba(255,255,255,0.98);
-        font-size: 1.3rem;
-        font-weight: 700;
-        margin-top: 1.2rem;
-        position: relative;
-        z-index: 1;
-        text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        color: #64748b;
+        font-size: 1rem;
+        font-weight: 600;
+        margin-top: 0.5rem;
+        text-transform: uppercase;
         letter-spacing: 1px;
     }
     
-    /* Stats with Enhanced Design */
-    .stat-box {
-        background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #ff6b9d 100%);
-        background-size: 200% 200%;
-        animation: gradientShift 10s ease infinite;
-        border-radius: 18px;
-        padding: 1.8rem 1.5rem;
+    /* Stats - Minimal Design */
+    .stat-card {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 1.5rem;
         text-align: center;
-        color: white;
-        margin: 0.8rem 0;
-        box-shadow: 0 10px 30px rgba(245, 87, 108, 0.35),
-                    0 0 60px rgba(240, 147, 251, 0.15),
-                    inset 0 0 0 1px rgba(255,255,255,0.15);
-        border: 2px solid rgba(255, 255, 255, 0.1);
+        margin: 0.5rem 0;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
         transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
     }
     
-    .stat-box:hover {
-        transform: scale(1.05);
-        box-shadow: 0 15px 40px rgba(245, 87, 108, 0.5),
-                    0 0 80px rgba(240, 147, 251, 0.25);
-    }
-    
-    .stat-box::after {
-        content: '';
-        position: absolute;
-        top: -50%;
-        right: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);
-        animation: rotate 15s linear infinite;
+    .stat-card:hover {
+        border-color: #10b981;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);
     }
     
     .stat-number {
-        font-size: 3.2rem;
-        font-weight: 800;
-        margin: 0.3rem 0;
-        position: relative;
-        z-index: 1;
-        text-shadow: 2px 4px 10px rgba(0,0,0,0.25);
-        letter-spacing: -1px;
+        font-size: 2.5rem;
+        font-weight: 900;
+        color: #10b981;
+        margin: 0;
+        line-height: 1;
     }
     
-    .stat-text {
-        font-size: 0.9rem;
-        opacity: 0.98;
+    .stat-label {
+        font-size: 0.85rem;
+        color: #64748b;
         font-weight: 600;
+        margin-top: 0.5rem;
         text-transform: uppercase;
-        letter-spacing: 2px;
-        position: relative;
-        z-index: 1;
-        text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        letter-spacing: 1px;
     }
     
-    /* Info Sections with Enhanced Design */
+    /* Info Box - Clean Design */
     .info-box {
-        background: linear-gradient(135deg, #fa709a 0%, #fee140 50%, #ffd89b 100%);
-        background-size: 200% 200%;
-        animation: gradientShift 12s ease infinite;
-        border-radius: 20px;
-        padding: 2.2rem;
-        color: #1a1a2e;
-        margin: 1.2rem 0;
-        box-shadow: 0 12px 35px rgba(250, 112, 154, 0.35),
-                    0 0 60px rgba(254, 225, 64, 0.2),
-                    inset 0 0 0 1px rgba(255,255,255,0.3);
-        border: 2px solid rgba(255, 255, 255, 0.2);
-        transition: all 0.3s ease;
-    }
-    
-    .info-box:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 18px 45px rgba(250, 112, 154, 0.45),
-                    0 0 80px rgba(254, 225, 64, 0.3);
+        background: #fef3c7;
+        border-left: 4px solid #f59e0b;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin: 1rem 0;
     }
     
     .info-heading {
-        font-weight: 800;
-        font-size: 1.5rem;
-        margin: 0 0 1rem 0;
-        text-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        letter-spacing: 0.5px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: #92400e;
+        margin: 0 0 0.5rem 0;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
     }
     
     .info-content {
-        font-size: 1.15rem;
-        line-height: 1.8;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #78350f;
         margin: 0;
-        font-weight: 600;
-        text-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        font-weight: 500;
     }
     
-    /* Impact Box with Animation */
-    @keyframes float {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
-    }
-    
+    /* Impact Box - Clean Design */
     .impact-box {
-        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #43e97b 100%);
-        background-size: 200% 200%;
-        animation: gradientShift 10s ease infinite, float 4s ease-in-out infinite;
-        border-radius: 22px;
-        padding: 2.5rem;
-        color: #0a0e27;
-        margin: 1.2rem 0;
-        box-shadow: 0 15px 40px rgba(79, 172, 254, 0.4),
-                    0 0 80px rgba(0, 242, 254, 0.2),
-                    inset 0 0 0 1px rgba(255,255,255,0.25);
-        border: 2px solid rgba(255, 255, 255, 0.2);
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .impact-box::before {
-        content: '💚';
-        position: absolute;
-        font-size: 8rem;
-        top: -2rem;
-        right: -2rem;
-        opacity: 0.15;
-        animation: rotate 20s linear infinite;
+        background: #dbeafe;
+        border-left: 4px solid #3b82f6;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin: 1rem 0;
     }
     
     .impact-fact {
-        font-size: 1.4rem;
-        line-height: 1.9;
-        font-weight: 700;
+        font-size: 1rem;
+        line-height: 1.7;
+        color: #1e3a8a;
+        font-weight: 600;
         margin: 0;
-        position: relative;
-        z-index: 1;
-        text-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
     
-    /* Sidebar with Enhanced Design */
+    /* Sidebar - Minimal Design */
     [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #1e1f3e 0%, #0f1429 50%, #0a0b1e 100%);
-        border-right: 2px solid rgba(0, 242, 96, 0.12);
-        box-shadow: 2px 0 30px rgba(0, 242, 96, 0.08);
+        background: white;
+        border-right: 1px solid #e5e7eb;
     }
     
     [data-testid="stSidebar"] h1,
     [data-testid="stSidebar"] h2,
     [data-testid="stSidebar"] h3 {
-        color: #00f260;
-        text-shadow: 0 0 20px rgba(0, 242, 96, 0.5);
+        color: #10b981;
         font-weight: 700;
     }
     
     [data-testid="stSidebar"] hr {
-        border-color: rgba(0, 242, 96, 0.2);
+        border-color: #e5e7eb;
         margin: 1.5rem 0;
     }
     
-    /* Buttons with Advanced Styling */
+    /* Buttons - Clean Modern Style */
     .stButton>button {
         width: 100%;
-        background: linear-gradient(135deg, #00f260 0%, #0575e6 50%, #00d2ff 100%);
-        background-size: 200% 200%;
-        animation: gradientShift 8s ease infinite;
+        background: #10b981;
         color: white;
-        font-size: 1.3rem;
-        font-weight: 800;
-        padding: 1.4rem 2rem;
-        border-radius: 18px;
-        border: 2px solid rgba(255, 255, 255, 0.2);
-        box-shadow: 0 12px 35px rgba(0, 242, 96, 0.4),
-                    0 0 60px rgba(5, 117, 230, 0.2),
-                    inset 0 0 0 1px rgba(255,255,255,0.1);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        text-transform: uppercase;
-        letter-spacing: 2px;
+        font-size: 1rem;
+        font-weight: 700;
+        padding: 0.875rem 1.5rem;
+        border-radius: 10px;
+        border: none;
+        box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
+        transition: all 0.2s ease;
         cursor: pointer;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .stButton>button::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0;
-        height: 0;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.3);
-        transform: translate(-50%, -50%);
-        transition: width 0.6s, height 0.6s;
-    }
-    
-    .stButton>button:hover::before {
-        width: 300px;
-        height: 300px;
     }
     
     .stButton>button:hover {
-        transform: translateY(-6px) scale(1.02);
-        box-shadow: 0 20px 50px rgba(0, 242, 96, 0.6),
-                    0 0 100px rgba(5, 117, 230, 0.4);
-        border-color: rgba(255, 255, 255, 0.4);
+        background: #059669;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        transform: translateY(-1px);
     }
     
     .stButton>button:active {
-        transform: translateY(-2px) scale(0.98);
+        transform: translateY(0);
     }
     
-    /* Upload with Enhanced Design */
-    @keyframes dashedBorder {
-        0%, 100% { border-color: rgba(0, 242, 96, 0.3); }
-        50% { border-color: rgba(5, 117, 230, 0.5); }
-    }
-    
+    /* Upload - Clean Design */
     [data-testid="stFileUploader"] {
-        background: rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(20px);
-        border-radius: 24px;
-        padding: 3rem;
-        border: 3px dashed rgba(0, 242, 96, 0.3);
-        animation: dashedBorder 3s ease-in-out infinite;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3),
-                    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+        background: white;
+        border: 2px dashed #d1d5db;
+        border-radius: 16px;
+        padding: 2.5rem;
         transition: all 0.3s ease;
     }
     
     [data-testid="stFileUploader"]:hover {
-        border-color: rgba(0, 242, 96, 0.6);
-        background: rgba(255, 255, 255, 0.08);
-        box-shadow: 0 15px 50px rgba(0, 242, 96, 0.2);
+        border-color: #10b981;
+        background: #f0fdf4;
     }
     
-    /* Section Titles with Glow Effect */
-    .section-heading {
-        color: #00f260;
-        font-size: 2.3rem;
+    /* Section Titles - Clean Design */
+    .section-title {
+        color: #1f2937;
+        font-size: 1.5rem;
         font-weight: 800;
-        text-align: center;
-        margin: 3rem 0 2rem 0;
-        text-transform: uppercase;
-        letter-spacing: 4px;
-        text-shadow: 0 0 30px rgba(0, 242, 96, 0.6),
-                     0 0 60px rgba(0, 242, 96, 0.3);
-        position: relative;
-        padding-bottom: 1rem;
+        margin: 2rem 0 1rem 0;
     }
     
-    .section-heading::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 100px;
-        height: 4px;
-        background: linear-gradient(90deg, transparent, #00f260, transparent);
-        border-radius: 2px;
-        box-shadow: 0 0 20px rgba(0, 242, 96, 0.8);
-    }
-    
-    /* Feature Boxes with Enhanced Design */
+    /* Feature Boxes - Clean Design */
     .feature {
-        background: rgba(255, 255, 255, 0.07);
-        backdrop-filter: blur(15px);
-        border-radius: 20px;
-        padding: 2.2rem;
-        border-left: 6px solid #00f260;
-        color: #e8e8e8;
-        margin: 1.2rem 0;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3),
-                    0 0 0 1px rgba(255, 255, 255, 0.08);
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin: 1rem 0;
         transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .feature::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 6px;
-        height: 100%;
-        background: linear-gradient(180deg, #00f260, #0575e6);
-        box-shadow: 0 0 20px rgba(0, 242, 96, 0.6);
     }
     
     .feature:hover {
-        transform: translateX(10px);
-        background: rgba(255, 255, 255, 0.1);
-        box-shadow: 0 12px 40px rgba(0, 242, 96, 0.2);
+        border-color: #10b981;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);
     }
     
     .feature-title {
-        color: #00f260;
-        font-weight: 800;
-        font-size: 1.4rem;
-        margin: 0 0 1rem 0;
-        text-shadow: 0 0 15px rgba(0, 242, 96, 0.4);
-        letter-spacing: 0.5px;
+        color: #10b981;
+        font-weight: 700;
+        font-size: 1.1rem;
+        margin: 0 0 0.5rem 0;
     }
     
     .feature-desc {
-        font-size: 1.1rem;
-        line-height: 1.9;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: #64748b;
         margin: 0;
-        font-weight: 500;
-        color: #d0d0d0;
     }
     
-    /* Metrics with Enhanced Design */
+    /* Metrics - Clean Design */
     .stMetric {
-        background: rgba(255, 255, 255, 0.07);
-        backdrop-filter: blur(15px);
-        padding: 1.5rem;
-        border-radius: 16px;
-        border: 2px solid rgba(255, 255, 255, 0.12);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3),
-                    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-        transition: all 0.3s ease;
-    }
-    
-    .stMetric:hover {
-        transform: translateY(-3px);
-        border-color: rgba(0, 242, 96, 0.3);
-        box-shadow: 0 12px 35px rgba(0, 242, 96, 0.2);
+        background: white;
+        border: 1px solid #e5e7eb;
+        padding: 1rem;
+        border-radius: 10px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     }
     
     .stMetric label {
-        color: #0575e6 !important;
-        font-weight: 700 !important;
-        font-size: 1rem !important;
-        text-shadow: 0 0 10px rgba(5, 117, 230, 0.3);
-        letter-spacing: 0.5px;
+        color: #64748b !important;
+        font-weight: 600 !important;
+        font-size: 0.85rem !important;
     }
     
     .stMetric [data-testid="stMetricValue"] {
-        color: #00f260 !important;
+        color: #10b981 !important;
         font-weight: 800 !important;
-        font-size: 2rem !important;
-        text-shadow: 0 0 20px rgba(0, 242, 96, 0.5);
-        letter-spacing: -0.5px;
     }
     
-    /* Progress bar with Animation */
-    @keyframes progressGlow {
-        0%, 100% { 
-            box-shadow: 0 0 15px rgba(0, 242, 96, 0.5);
-        }
-        50% { 
-            box-shadow: 0 0 30px rgba(0, 242, 96, 0.8);
-        }
-    }
-    
+    /* Progress bar - Clean Design */
     .stProgress > div > div {
-        background: linear-gradient(90deg, #00f260 0%, #0575e6 50%, #00d2ff 100%);
-        background-size: 200% 100%;
-        animation: gradientShift 3s ease infinite, progressGlow 2s ease-in-out infinite;
-        height: 12px;
-        border-radius: 12px;
-        box-shadow: 0 0 20px rgba(0, 242, 96, 0.6);
+        background: #10b981;
+        height: 8px;
+        border-radius: 8px;
     }
     
     .stProgress > div {
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 12px;
+        background: #e5e7eb;
+        border-radius: 8px;
     }
     
-    /* Additional Enhancements */
+    /* Spinner */
     .stSpinner > div {
-        border-top-color: #00f260 !important;
-        border-right-color: #0575e6 !important;
+        border-top-color: #10b981 !important;
+        border-right-color: #10b981 !important;
     }
     
     /* Image Display */
     img {
-        border-radius: 20px;
-        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4),
-                    0 0 0 1px rgba(255, 255, 255, 0.1);
-        transition: all 0.3s ease;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5e7eb;
     }
     
-    img:hover {
-        transform: scale(1.02);
-        box-shadow: 0 20px 60px rgba(0, 242, 96, 0.3);
-    }
-    
-    /* Expander Styling */
+    /* Expander */
     .streamlit-expanderHeader {
-        background: rgba(255, 255, 255, 0.06);
-        border-radius: 14px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        font-weight: 700;
-        color: #00f260 !important;
-        transition: all 0.3s ease;
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        font-weight: 600;
+        color: #1f2937 !important;
     }
     
     .streamlit-expanderHeader:hover {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: rgba(0, 242, 96, 0.3);
-        box-shadow: 0 5px 20px rgba(0, 242, 96, 0.2);
+        border-color: #10b981;
     }
     
-    /* Scrollbar Styling */
+    /* Badge */
+    .badge {
+        display: inline-block;
+        background: #10b981;
+        color: white;
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        margin: 0.25rem;
+    }
+    
+    /* Alert Box */
+    .alert-success {
+        background: #d1fae5;
+        border-left: 4px solid #10b981;
+        padding: 1rem;
+        border-radius: 8px;
+        color: #065f46;
+        font-weight: 600;
+        margin: 1rem 0;
+    }
+    
+    /* Scrollbar */
     ::-webkit-scrollbar {
-        width: 12px;
-        height: 12px;
+        width: 8px;
+        height: 8px;
     }
     
     ::-webkit-scrollbar-track {
-        background: rgba(0, 0, 0, 0.3);
-        border-radius: 10px;
+        background: #f1f5f9;
     }
     
     ::-webkit-scrollbar-thumb {
-        background: linear-gradient(180deg, #00f260, #0575e6);
-        border-radius: 10px;
-        border: 2px solid rgba(0, 0, 0, 0.3);
+        background: #cbd5e1;
+        border-radius: 4px;
     }
     
     ::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(180deg, #0575e6, #00f260);
-        box-shadow: 0 0 10px rgba(0, 242, 96, 0.5);
+        background: #94a3b8;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -717,74 +519,104 @@ def classify_waste(image, model, processor):
         st.error(f"Classification error: {e}")
         return None, None, None
 
-# Header with Enhanced Design
+# Navigation Bar
 st.markdown("""
-<div class="hero">
-    <h1 class="hero-title">♻️ EcoSort AI</h1>
-    <p class="hero-subtitle">🤖 Smart Waste Classification • 🎯 99.26% Accuracy • 🌍 Real-Time Impact Tracking</p>
+<div class="nav-bar">
+    <div>
+        <span class="logo">🌿 WasteWise AI</span>
+        <span class="nav-subtitle">Smart Recycling Assistant</span>
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
-# Sidebar
-with st.sidebar:
-    st.markdown("### 🌍 Your Impact")
-    
+# Hero Section
+st.markdown("""
+<div class="hero-minimal">
+    <h1 class="hero-title">Classify Your Waste<br>Instantly with AI</h1>
+    <p class="hero-subtitle">Upload a photo and get instant recycling instructions powered by advanced machine learning</p>
+</div>
+""", unsafe_allow_html=True)
+
+# Stats Row
+col_stat1, col_stat2, col_stat3, col_stat4 = st.columns(4)
+
+with col_stat1:
     st.markdown(f"""
-    <div class="stat-box">
-        <div class="stat-number">{st.session_state.eco_score}</div>
-        <div class="stat-text">Eco Points</div>
+    <div class="stat-card">
+        <div class="stat-number">{st.session_state.total_items}</div>
+        <div class="stat-label">Items Classified</div>
     </div>
     """, unsafe_allow_html=True)
+
+with col_stat2:
+    st.markdown(f"""
+    <div class="stat-card">
+        <div class="stat-number">{st.session_state.eco_score}</div>
+        <div class="stat-label">Eco Points</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col_stat3:
+    st.markdown(f"""
+    <div class="stat-card">
+        <div class="stat-number">{st.session_state.energy_saved:.0f}</div>
+        <div class="stat-label">kWh Saved</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col_stat4:
+    st.markdown(f"""
+    <div class="stat-card">
+        <div class="stat-number">{st.session_state.co2_prevented:.1f}</div>
+        <div class="stat-label">kg CO₂ Reduced</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+st.markdown("<br>", unsafe_allow_html=True)
+
+# Sidebar
+with st.sidebar:
+    st.markdown("### 📋 Quick Guide")
     
-    st.markdown("---")
-    
-    col1, col2 = st.columns(2)
-    with col1:
-        st.metric("📦 Sorted", st.session_state.total_items)
-        st.metric("⚡ kWh", f"{st.session_state.energy_saved:.1f}")
-    with col2:
-        st.metric("🌱 CO₂ kg", f"{st.session_state.co2_prevented:.1f}")
-        if st.session_state.total_items > 0:
-            st.metric("📊 Avg", st.session_state.eco_score // st.session_state.total_items)
-    
-    st.markdown("---")
-    st.markdown("### 💡 Pro Tips")
     st.markdown("""
     <div class="feature">
-        <div class="feature-title">♻️ Best Practices</div>
+        <div class="feature-title">🎯 How It Works</div>
         <div class="feature-desc">
-        ✓ Clean & rinse items<br>
-        ✓ Remove all labels<br>
-        ✓ Flatten cardboard<br>
-        ✓ Separate materials<br>
-        ✓ Check local rules<br>
-        ✓ Never bag recyclables
+        1. Upload waste photo<br>
+        2. AI analyzes instantly<br>
+        3. Get recycling guide<br>
+        4. Earn eco points
         </div>
     </div>
     """, unsafe_allow_html=True)
     
-    # Add achievement badges
+    st.markdown("---")
+    
+    st.markdown("### ♻️ Categories")
+    categories = ["Battery", "Organic", "Cardboard", "Clothes", "Glass", 
+                  "Metal", "Paper", "Plastic", "Shoes", "Trash"]
+    
+    for cat in categories:
+        st.markdown(f"<span class='badge'>{cat}</span>", unsafe_allow_html=True)
+    
+    st.markdown("---")
+    
+    # Achievement badges
     achievements = []
     if st.session_state.total_items >= 10:
-        achievements.append("🏆 Eco Warrior")
+        achievements.append("🏆 Beginner")
     if st.session_state.total_items >= 25:
-        achievements.append("⭐ Green Champion")
+        achievements.append("⭐ Intermediate")
     if st.session_state.total_items >= 50:
-        achievements.append("💎 Planet Protector")
+        achievements.append("💎 Expert")
     
     if achievements:
-        st.markdown("### 🎖️ Achievements")
+        st.markdown("### � Achievements")
         for badge in achievements:
-            st.markdown(f"""
-            <div style="background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%); 
-                        padding: 0.8rem; border-radius: 12px; text-align: center; 
-                        margin: 0.5rem 0; font-weight: 700; color: white;
-                        box-shadow: 0 8px 20px rgba(255, 216, 155, 0.3);">
-                {badge}
-            </div>
-            """, unsafe_allow_html=True)
+            st.markdown(f"<div class='badge'>{badge}</div>", unsafe_allow_html=True)
+        st.markdown("")
     
-    if st.button("🔄 Reset"):
+    if st.button("🔄 Reset Stats", use_container_width=True):
         st.session_state.eco_score = 0
         st.session_state.total_items = 0
         st.session_state.energy_saved = 0
@@ -795,15 +627,15 @@ with st.sidebar:
 col_left, col_right = st.columns([1, 1], gap="large")
 
 with col_left:
-    st.markdown('<p class="section-heading">📸 Upload</p>', unsafe_allow_html=True)
-    uploaded = st.file_uploader("", type=["jpg", "jpeg", "png"], label_visibility="collapsed")
+    st.markdown('<div class="section-title">📸 Upload Waste Image</div>', unsafe_allow_html=True)
+    uploaded = st.file_uploader("Drop your image here or click to browse", type=["jpg", "jpeg", "png"])
     
     if uploaded:
         img = Image.open(uploaded).convert('RGB')
         st.image(img, use_column_width=True)
 
 with col_right:
-    st.markdown('<p class="section-heading">🤖 Results</p>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">🔍 Classification Results</div>', unsafe_allow_html=True)
     
     if uploaded:
         with st.spinner("🔍 Analyzing..."):
@@ -841,13 +673,17 @@ with col_right:
                     """, unsafe_allow_html=True)
                     
                     # Action button
-                    if st.button("✅ Mark Recycled"):
+                    if st.button("✅ Mark as Recycled", use_container_width=True):
                         st.session_state.eco_score += 10
                         st.session_state.total_items += 1
                         st.session_state.energy_saved += eco_data['energy']
                         st.session_state.co2_prevented += eco_data['co2']
+                        st.markdown(f"""
+                        <div class="alert-success">
+                            ✅ Great job! You earned 10 eco points. Keep going!
+                        </div>
+                        """, unsafe_allow_html=True)
                         st.balloons()
-                        st.success(f"🎉 +10 Points! Total: {st.session_state.eco_score}")
                         st.rerun()
                     
                     # All predictions
