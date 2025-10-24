@@ -528,7 +528,7 @@ def classify_waste(image, model, processor):
 st.markdown("""
 <div class="nav-bar">
     <div>
-        <span class="logo">🌿 WasteWise AI</span>
+        <span class="logo">EcoSort</span>
         <span class="nav-subtitle">Smart Recycling Assistant • Enhanced for Mixed Materials</span>
     </div>
 </div>
